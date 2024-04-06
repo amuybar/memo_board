@@ -1,0 +1,99 @@
+<!-- views/loginForm.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        .card {
+          justify-self: center;
+          margin: auto;
+            background-color: rgba(0, 0, 0, 0.4); 
+            border-radius: 8px;
+            color: white;
+            padding: 20px;
+            
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.7); 
+        }
+
+        form {
+            margin-top: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card" style="width: 400px;">
+        <h2>Login</h2>
+        <form action="/login" method="post" onsubmit="submitLoginForm(event)">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required autofocus autocomplete="username"><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
+    <script>
+      function submitLoginForm(event) {
+          event.preventDefault(); // Prevent default form submission behavior
+          
+          // Get form data
+          const formData = new FormData(document.getElementById('loginForm'));
+
+          // Send form data to the backend using Fetch API
+          fetch('/login', {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => {
+              if (response.ok) {
+                  // Handle successful form submission
+                  console.log('Login successful!');
+                  // You can redirect the user or perform other actions here
+              } else {
+                  // Handle error response from the server
+                  console.error('Error submitting login form:', response.statusText);
+                  // You can display an error message to the user here
+              }
+          })
+          .catch(error => {
+              // Handle network errors or other exceptions
+              console.error('Error submitting login form:', error);
+              // You can display an error message to the user here
+          });
+      }
+  </script>
+</body>
+
+</html>

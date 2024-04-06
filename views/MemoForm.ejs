@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Memo App</title>
+  <style>
+    /* Add styles for card elevation, border-radius, and shadow (replace with your desired styles) */
+    .memo-card {
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Memo Form</h1>
+  <form action="/createMemo" method="post"> <button type="submit">Create Memo</button>
+  </form>
+
+  <h2>Memo List</h2>
+  <ul>
+    <% for (const memo of memos) { %>
+    <li class="memo-card">
+      <h3><%= memo.title %></h3>
+      <p>From: <%= memo.from %></p>
+      <p>To: <%= memo.to %></p>
+      <p><%= memo.content %></p>
+      <i class="fa fa-eye"></i> <i class="fa fa-heart"></i> </li>
+    <% } %>
+  </ul>
+
+  <script>
+    // Fetch memo data from the backend on page load (replace with your actual logic)
+    fetch('/memos')
+      .then(response => response.json())
+      .then(data => {
+        const memoList = document.querySelector('ul');
+        data.forEach(memo => {
+          const listItem = document.createElement('li');
+          listItem.classList.add('memo-card');
+          // ... populate list item content with memo data
+          memoList.appendChild(listItem);
+        });
+      });
+  </script>
+</body>
+</html>
